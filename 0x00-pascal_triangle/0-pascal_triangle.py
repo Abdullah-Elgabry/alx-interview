@@ -3,13 +3,13 @@
 """
 
 
-def pascal_triangle(l):
+def pascal_triangle(n):
     """ This function returns int in list of lists [[<int>]] based on pascale rule of
-    user inputs l.
+    user inputs n.
     """
     output = []
-    if l > 0:
-        for i in range(1, l + 1):
+    if n > 0:
+        for i in range(1, n + 1):
             level = []
             lst = 1
             for j in range(1, i + 1):
