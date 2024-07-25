@@ -5,8 +5,7 @@ This Module for Pascal's Triangle
 
 
 def pascal_triangle(l):
-    """
-    This function returns int in list of lists [[<int>]] based on pascale rule of
+    """ This function returns int in list of lists [[<int>]] based on pascale rule of
     user inputs l.
     """
     output = []
