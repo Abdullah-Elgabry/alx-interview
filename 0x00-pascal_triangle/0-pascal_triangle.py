@@ -1,11 +1,13 @@
 #!/usr/bin/python3
-""" This Module for Pascal's Triangle
+"""
+This Module for Pascal's Triangle
 """
 
 
 def pascal_triangle(n):
-    """ This function returns int in list of lists [[<int>]] based on pascale rule of
-    user inputs n.
+    """
+    This function returns int in list of lists [[<int>]] based on pascale rule of
+    user inputs n
     """
     output = []
     if n > 0:
