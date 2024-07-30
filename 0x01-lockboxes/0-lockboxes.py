@@ -1,70 +1,69 @@
 #!/usr/bin/python3
-"""Solves the lock boxes puzzle."""
+""" lock boxes task """
 
 
-def get_keys_from_next_unchecked_box(unchecked_boxes):
-    """
-    Retrieves the keys from the next box that has been opened
+def find_next_open_box(open_boxes):
+    """searching for the coming box.
 
     Args:
-        unchecked_boxes (dict): {} containing info about unchecked boxes.
+        open_boxes (dict): {} brev openned boxes
 
     Returns:
-        list: List of keys found in the opened but unchecked box.
+        list: [] openned boxes keys
     """
-    for index, box in unchecked_boxes.items():
+    for index, box in open_boxes.items():
         if box.get('status') == 'opened':
-            box['status'] = 'checked'
+            box['status'] = 'opened/checked'
             return box.get('keys')
     return None
 
 
-def all_boxes_can_be_unlocked(boxes):
-    """
-    Determines if all boxes can be unlocked.
+def openastrc(all_boxes):
+    """ckecking function of oppend boxes
 
     Args:
-        boxes (list): List containing all the boxes with their respective keys.
+        all_boxes (list): [] have * box with the keys.
 
     Returns:
-        bool: True if all boxes can be unlocked, otherwise False.
+        bool: false in case canot open otherwise True.
     """
-    if len(boxes) <= 1 or boxes == [[]]:
+    if len(all_boxes) <= 1 or all_boxes == [[]]:
         return True
 
-    b = {}
+    checker = {}
     while True:
-        if len(b) == 0:
-            b[0] = {
+        if len(checker) == 0:
+            checker[0] = {
                 'status': 'opened',
-                'keys': boxes[0],
+                'keys': all_boxes[0],
             }
-        keys = get_keys_from_next_unchecked_box(b)
+        keys = find_next_open_box(checker)
         if keys:
             for key in keys:
                 try:
-                    if b.get(key) and b.get(key).get('status') == 'checked':
+                    if checker.get(key) and checker.get(key).get('status') \
+                       == 'opened/checked':
                         continue
-                    b[key] = {
+                    checker[key] = {
                         'status': 'opened',
-                        'keys': boxes[key]
+                        'keys': all_boxes[key]
                     }
                 except (KeyError, IndexError):
                     continue
-        elif 'opened' in [box.get('status') for box in b.values()]:
+        elif 'opened' in [box.get('status') for box in checker.values()]:
             continue
-        elif len(b) == len(boxes):
+        elif len(checker) == len(all_boxes):
             break
         else:
             return False
 
-    return len(b) == len(boxes)
+    return len(checker) == len(all_boxes)
 
 
-def main():
-    """Main entry point for testing the all_boxes_can_be_unlocked function."""
-    print(all_boxes_can_be_unlocked([[]]))  # Example test
+def entry_point():
+    """testing"""
+    openastrc([[]])  # test
 
 
 if __name__ == '__main__':
-    main()
+    entry_point()
