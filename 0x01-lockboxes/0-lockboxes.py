@@ -4,11 +4,11 @@
 
 def get_keys_from_next_unchecked_box(unchecked_boxes):
     """
-    Retrieves the keys from the next box that has been opened but not yet checked.
-    
+    Retrieves the keys from the next box that has been opened
+
     Args:
-        unchecked_boxes (dict): Dictionary containing information about unchecked boxes.
-    
+        unchecked_boxes (dict): {} containing info about unchecked boxes.
+
     Returns:
         list: List of keys found in the opened but unchecked box.
     """
@@ -22,43 +22,43 @@ def get_keys_from_next_unchecked_box(unchecked_boxes):
 def all_boxes_can_be_unlocked(boxes):
     """
     Determines if all boxes can be unlocked.
-    
+
     Args:
         boxes (list): List containing all the boxes with their respective keys.
-    
+
     Returns:
         bool: True if all boxes can be unlocked, otherwise False.
     """
     if len(boxes) <= 1 or boxes == [[]]:
         return True
 
-    unlock_box = {}
+    b = {}
     while True:
-        if len(unlock_box) == 0:
-            unlock_box[0] = {
+        if len(b) == 0:
+            b[0] = {
                 'status': 'opened',
                 'keys': boxes[0],
             }
-        keys = get_keys_from_next_unchecked_box(unlock_box)
+        keys = get_keys_from_next_unchecked_box(b)
         if keys:
             for key in keys:
                 try:
-                    if unlock_box.get(key) and unlock_box.get(key).get('status') == 'checked':
+                    if b.get(key) and b.get(key).get('status') == 'checked':
                         continue
-                    unlock_box[key] = {
+                    b[key] = {
                         'status': 'opened',
                         'keys': boxes[key]
                     }
                 except (KeyError, IndexError):
                     continue
-        elif 'opened' in [box.get('status') for box in unlock_box.values()]:
+        elif 'opened' in [box.get('status') for box in b.values()]:
             continue
-        elif len(unlock_box) == len(boxes):
+        elif len(b) == len(boxes):
             break
         else:
             return False
 
-    return len(unlock_box) == len(boxes)
+    return len(b) == len(boxes)
 
 
 def main():
