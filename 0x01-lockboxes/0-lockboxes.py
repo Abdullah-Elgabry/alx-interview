@@ -39,14 +39,14 @@ def canUnlockAll(boxes):
             }
         keys = find_next_open_box(checker)
         if keys:
-            for key in keys:
+            for tgt in keys:
                 try:
-                    if checker.get(key) and checker.get(key).get('status') \
+                    if checker.get(tgt) and checker.get(tgt).get('status') \
                        == 'opened/checked':
                         continue
-                    checker[key] = {
+                    checker[tgt] = {
                         'status': 'opened',
-                        'keys': boxes[key]
+                        'keys': boxes[tgt]
                     }
                 except (KeyError, IndexError):
                     continue
@@ -61,7 +61,7 @@ def canUnlockAll(boxes):
 
 
 def entry_point():
-    """testing"""
+    """testing canUnlockAll (main function)"""
     canUnlockAll([[]])  # test
 
 
