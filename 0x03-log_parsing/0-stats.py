@@ -2,13 +2,13 @@
 import sys
 
 
-def print_msg(codes, full_size):
+def print_msg(dict_sc, full_size):
     '''
     this func will reads stdin line by line and computes metrics.
     '''
 
     print("File size: {}".format(full_size))
-    for dct_k, dct_v in sorted(codes.items()):
+    for dct_k, dct_v in sorted(dict_sc.items()):
         if dct_v != 0:
             print("{}: {}".format(dct_k, dct_v))
 
@@ -16,7 +16,7 @@ def print_msg(codes, full_size):
 full_size = 0
 code = 0
 add_ind = 0
-codes = {"200": 0,
+dict_sc = {"200": 0,
            "301": 0,
            "400": 0,
            "401": 0,
@@ -37,12 +37,12 @@ try:
                 full_size += int(parsed_line[0])
                 code = parsed_line[1]
 
-                if (code in codes.dct_ks()):
-                    codes[code] += 1
+                if (code in dict_sc.dct_ks()):
+                    dict_sc[code] += 1
 
             if (add_ind == 10):
-                print_msg(codes, full_size)
+                print_msg(dict_sc, full_size)
                 add_ind = 0
 
 finally:
-    print_msg(codes, full_size)
+    print_msg(dict_sc, full_size)
