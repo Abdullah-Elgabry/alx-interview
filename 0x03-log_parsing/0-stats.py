@@ -1,5 +1,4 @@
 #!/usr/bin/python3
-
 import sys
 
 
@@ -28,15 +27,15 @@ dict_sc = {"200": 0,
 
 try:
     for line in sys.stdin:
-        parsed_line = line.split()  # ✄ trimming
-        parsed_line = parsed_line[::-1]  # inverting
+        parsed_line = line.split()
+        parsed_line = parsed_line[::-1]
 
         if len(parsed_line) > 2:
             add_ind += 1
 
             if add_ind <= 10:
-                full_size += int(parsed_line[0])  # file size
-                code = parsed_line[1]  # status code
+                full_size += int(parsed_line[0])
+                code = parsed_line[1]
 
                 if (code in dict_sc.dct_ks()):
                     dict_sc[code] += 1
