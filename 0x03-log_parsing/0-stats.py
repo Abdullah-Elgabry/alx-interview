@@ -1,29 +1,43 @@
 #!/usr/bin/python3
+"""
+Write a script that reads stdin line by line and computes metrics:
+Input format: <IP Address> - [<date>] "GET /projects/260 HTTP/1.1" 
+<status code> <file size> (if the format is not this one, the line must
+be skipped)After every 10 lines and/or a keyboard interruption
+(CTRL + C), print these statistics from the beginning:
+Total file size: File size: <total size>
+where <total size> is the sum of all previous
+<file size> (see input format above)Number of lines by status code:
+possible status code: 200, 301, 400, 401, 403, 404, 405 and 500
+if a status code doesnot appear or is not an integer, donot
+print anything for this status codeformat: <status code>: <number>
+status codes should be printed in ascending order
+Warning: In this sample, you will have random value - it is normal
+to not have the same output as this one
+"""
 import sys
 
 
-def print_msg(dict_sc, full_size):
-    '''
-    this func will reads stdin line by line and computes metrics.
-    '''
-
-    print("File size: {}".format(full_size))
-    for dct_k, dct_v in sorted(dict_sc.items()):
-        if dct_v != 0:
-            print("{}: {}".format(dct_k, dct_v))
+def print_msg(codes, file_size):
+    print("File size: {}".format(file_size))
+    for key, val in sorted(codes.items()):
+        if val != 0:
+            print("{}: {}".format(key, val))
 
 
-full_size = 0
+file_size = 0
 code = 0
-add_ind = 0
-dict_sc = {"200": 0,
-           "301": 0,
-           "400": 0,
-           "401": 0,
-           "403": 0,
-           "404": 0,
-           "405": 0,
-           "500": 0}
+count_lines = 0
+codes = {
+    "200": 0,
+    "301": 0,
+    "400": 0,
+    "401": 0,
+    "403": 0,
+    "404": 0,
+    "405": 0,
+    "500": 0
+}
 
 try:
     for line in sys.stdin:
@@ -31,18 +45,18 @@ try:
         parsed_line = parsed_line[::-1]
 
         if len(parsed_line) > 2:
-            add_ind += 1
+            count_lines += 1
 
-            if add_ind <= 10:
-                full_size += int(parsed_line[0])
+            if count_lines <= 10:
+                file_size += int(parsed_line[0])
                 code = parsed_line[1]
 
-                if (code in dict_sc.dct_ks()):
-                    dict_sc[code] += 1
+                if (code in codes.keys()):
+                    codes[code] += 1
 
-            if (add_ind == 10):
-                print_msg(dict_sc, full_size)
-                add_ind = 0
+            if (count_lines == 10):
+                print_msg(codes, file_size)
+                count_lines = 0
 
 finally:
-    print_msg(dict_sc, full_size)
+    print_msg(codes, file_size)
