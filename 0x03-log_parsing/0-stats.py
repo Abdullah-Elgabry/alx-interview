@@ -7,13 +7,6 @@ be skipped)After every 10 lines and/or a keyboard interruption
 (CTRL + C), print these statistics from the beginning:
 Total file size: File size: <total size>
 where <total size> is the sum of all previous
-<file size> (see input format above)Number of lines by status code:
-possible status code: 200, 301, 400, 401, 403, 404, 405 and 500
-if a status code doesnot appear or is not an integer, donot
-print anything for this status codeformat: <status code>: <number>
-status codes should be printed in ascending order
-Warning: In this sample, you will have random value - it is normal
-to not have the same output as this one
 """
 import sys
 
