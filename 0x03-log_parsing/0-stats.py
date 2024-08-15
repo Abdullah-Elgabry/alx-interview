@@ -43,6 +43,8 @@ try:
             if (add_ind == 10):
                 print_msg(dict_sc, full_size)
                 add_ind = 0
+except:
+    pass
 
 finally:
     print_msg(dict_sc, full_size)
