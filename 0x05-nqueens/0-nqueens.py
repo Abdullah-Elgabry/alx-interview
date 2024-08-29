@@ -1,46 +1,61 @@
 #!/usr/bin/python3
-""" This module for solving the classic problem (N vop) """
-import sys
+""" NQuee task  N×N chessboard ##solved"""
+
+from sys import argv
 
 
-if len(sys.argv) > 2 or len(sys.argv) < 2:
-    print("Usage: nqueens N")
-    exit(1)
-
-if int(sys.argv[1]) < 4:
-    print("N must be at least 4")
-    exit(1)
-
-if not sys.argv[1].isdigit():
-    print("N must be a number")
-    exit(1)
-
-optt = int(sys.argv[1])
-
-
-def vop(optt, q=0, a=[], b=[], c=[]):
-    """This func will search for the valid options.
+def is_valid_queen_placement(queens_positions: list) -> bool:
+    """Check if the latest queen placement is valid.
+    
+    Args:
+        queens_positions (list): List containing the column positions of queens 
+                                 placed on the board so far.
+    
+    Returns:
+        bool: True if the current queen placement is valid, False otherwise.
     """
-    if q < optt:
-        for m in range(optt):
-            if m not in q and a + m not in b and q - m not in c:
-                yield from vop(optt, q + 1, a + [m], b + [q + m], c + [q - m])
+    current_row = len(queens_positions) - 1
+    for row in range(current_row):
+        column_difference = abs(queens_positions[row] - queens_positions[current_row])
+        if column_difference == 0 or column_difference == current_row - row:
+            return False
+    return True
+
+
+def solve_n_queens(n: int, row: int, queens_positions: list, solutions: list):
+    """Solve the N-Queens problem recursively and print each valid solution.
+    
+    Args:
+        n (int): The size of the chessboard (n x n).
+        row (int): The current row being processed.
+        queens_positions (list): List containing the column positions of queens 
+                                 placed on the board.
+        solutions (list): List to store the current solution being built.
+    """
+    if row == n:
+        print(solutions)
     else:
-        yield a
+        for column in range(n):
+            queens_positions.append(column)
+            solutions.append([row, column])
+            if is_valid_queen_placement(queens_positions):
+                solve_n_queens(n, row + 1, queens_positions, solutions)
+            queens_positions.pop()
+            solutions.pop()
 
 
-def ans(optt):
-    """ This function will shows the final result
-    """
-    lst = []
-    q = 0
-    for op in vop(optt, 0):
-        for s in op:
-            lst.append([q, s])
-            q += 1
-        print(lst)
-        lst = []
-        q = 0
+if len(argv) != 2:
+    print('Usage: nqueens N')
+    exit(1)
 
+try:
+    n = int(argv[1])
+except ValueError:
+    print('N must be a number')
+    exit(1)
 
-ans(optt)
+if n < 4:
+    print('N must be at least 4')
+    exit(1)
+else:
+    solve_n_queens(n, 0, [], [])
