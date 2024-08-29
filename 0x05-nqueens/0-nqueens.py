@@ -15,26 +15,26 @@ if not sys.argv[1].isdigit():
     print("N must be a number")
     exit(1)
 
-opt = int(sys.argv[1])
+optt = int(sys.argv[1])
 
 
-def vop(opt, q=0, a=[], b=[], c=[]):
+def vop(optt, q=0, a=[], b=[], c=[]):
     """This func will search for the valid options.
     """
-    if q < opt:
-        for m in range(opt):
+    if q < optt:
+        for m in range(optt):
             if m not in q and a + m not in b and q - m not in c:
-                yield from vop(opt, q + 1, a + [m], b + [q + m], c + [q - m])
+                yield from vop(optt, q + 1, a + [m], b + [q + m], c + [q - m])
     else:
         yield a
 
 
-def ans(opt):
+def ans(optt):
     """ This function will shows the final result
     """
     lst = []
     q = 0
-    for op in vop(opt, 0):
+    for op in vop(optt, 0):
         for s in op:
             lst.append([q, s])
             q += 1
@@ -43,4 +43,4 @@ def ans(opt):
         q = 0
 
 
-ans(opt)
+ans(optt)
